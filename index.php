@@ -8,7 +8,7 @@ function is_method($method) {
   return $_SERVER['REQUEST_METHOD'] === $method;
 }
 
-function matches($regex) {
+function matches($regex, $uri) {
   return preg_match($regex, $uri) === 1;
 }
 
