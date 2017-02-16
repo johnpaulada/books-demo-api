@@ -23,6 +23,9 @@ if (matches('/^\/books$/', $uri)) {
     // POST /books
     if (is_method('POST')) {
       // TODO: ... add a book
+      
+      // Set response code 201 CREATED
+      http_response_code(201);
     }
 }
 
