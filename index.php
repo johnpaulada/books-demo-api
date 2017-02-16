@@ -4,17 +4,21 @@
 $uri    = $_SERVER['REQUEST_URI'];
 $params = $_GET;
 
+function is_method($method) {
+  return $_SERVER['REQUEST_METHOD'] === $method;
+}
+
 // Route: /books
 if (preg_match('/^\/books/', $uri) === 1) {
 
     // GET /books
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-      // ... get all books
+    if (is_method('GET')) {
+      // TODO: ... get all books
     }
 
     // POST /books
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // ... add a book
+    if (is_method('POST')) {
+      // TODO: ... add a book
     }
 }
 
