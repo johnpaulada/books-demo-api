@@ -11,6 +11,11 @@ if (preg_match('/^\/books/', $uri) === 1) {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       // ... get all books
     }
+
+    // POST /books
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // ... add a book
+    }
 }
 
 ?>
