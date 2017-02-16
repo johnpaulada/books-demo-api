@@ -6,7 +6,11 @@ $params = $_GET;
 
 // Route: /books
 if (preg_match('/^\/books/', $uri) === 1) {
-  // ... check for different HTTP methods
+
+    // GET /books
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      // ... get all books
+    }
 }
 
 ?>
