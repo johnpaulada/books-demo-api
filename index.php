@@ -8,8 +8,12 @@ function is_method($method) {
   return $_SERVER['REQUEST_METHOD'] === $method;
 }
 
+function matches($regex) {
+  return preg_match($regex, $uri) === 1;
+}
+
 // Route: /books
-if (preg_match('/^\/books/', $uri) === 1) {
+if (matches('/^\/books$/')) {
 
     // GET /books
     if (is_method('GET')) {
