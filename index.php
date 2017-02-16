@@ -13,7 +13,7 @@ function matches($regex, $uri) {
 }
 
 // Route: /books
-if (matches('/^\/books$/')) {
+if (matches('/^\/books$/', $uri)) {
 
     // GET /books
     if (is_method('GET')) {
