@@ -36,7 +36,7 @@ if (matches('/^\/books$/', $uri)) {
       http_response_code(201);
 
       // Return book in JSON form
-      return json_encode($book);
+      echo json_encode($book);
     }
 }
 
