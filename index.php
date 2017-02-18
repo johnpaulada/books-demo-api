@@ -3,6 +3,9 @@
 // Get uri
 $uri    = $_SERVER['REQUEST_URI'];
 
+// Connect to db
+$dbCon = mysqli_connect("localhost","root","","books");
+
 function is_method($method) {
   return $_SERVER['REQUEST_METHOD'] === $method;
 }
