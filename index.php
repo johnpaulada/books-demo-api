@@ -17,7 +17,24 @@ if (matches('/^\/books$/', $uri)) {
     // GET /books
     if (is_method('GET')) {
       $params = $_GET;
-      // TODO: ... get all books
+
+      $booksQuery = "SELECT * FROM books";
+      $results = mysqli_query($dbCon, $booksQuery);
+      $books = [];
+
+      // Set response code to 200 OK
+      http_response_code(200);
+
+      if (mysqli_num_rows($results) > 0) {
+        while($row = mysqli_fetch_assoc($results)) {
+          array_push($books, $row);
+        }
+
+        echo json_encode($books);
+      }
+      else {
+        echo json_decode(['msg' => "No results."]);
+      }
     }
 
     // POST /books
