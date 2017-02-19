@@ -9,7 +9,7 @@ $username   = "root";
 $password   = "";
 $dbName     = "books";
 
-connectToBooksDB($serverName, $username, $password, $dbName);
+$dbCon = connectToBooksDB($serverName, $username, $password, $dbName);
 
 // Route: /books
 if (matches('/^\/books$/', $uri)) {
@@ -29,11 +29,23 @@ if (matches('/^\/books$/', $uri)) {
         'author' => $params['author']
       ];
 
-      // Set response code 201 CREATED
-      http_response_code(201);
+      $bookQuery = 'INSERT INTO books (name, author)
+                    VALUES ("' . $book['name'] . '", "' . $book['author'] . '")';
 
-      // Return book in JSON form
-      echo json_encode($book);
+      if (mysqli_query($dbCon, $bookQuery)) {
+        // Set response code 201 CREATED
+        http_response_code(201);
+
+        // Return book in JSON form
+        echo json_encode($book);
+      }
+      else {
+        // Set response code to 500 INTERNAL SERVER ERROR
+        http_response_code(500);
+
+        // Return error
+        echo json_encode(['error' => "Failed to add book."]);
+      }
     }
 }
 
@@ -66,6 +78,8 @@ function connectToBooksDB($sn, $un, $pw, $db)
     author VARCHAR(50) NOT NULL
   )";
   mysqli_query($dbCon, $tableQuery);
+
+  return $dbCon;
 }
 
 ?>
