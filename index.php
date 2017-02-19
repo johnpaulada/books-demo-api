@@ -9,31 +9,7 @@ $username   = "root";
 $password   = "";
 $dbName     = "books";
 
-// Start DB connection
-$dbCon = mysqli_connect($serverName, $username, $password);
-
-// Create Database
-$dbQuery = "CREATE DATABASE IF NOT EXISTS " . $dbName;
-mysqli_query($dbCon, $dbQuery);
-
-// Select Database
-mysqli_select_db($dbCon, $dbName);
-
-// Create Table
-$tableQuery = "CREATE TABLE IF NOT EXISTS books (
-  id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
-  author VARCHAR(50) NOT NULL
-)";
-mysqli_query($dbCon, $tableQuery);
-
-function is_method($method) {
-  return $_SERVER['REQUEST_METHOD'] === $method;
-}
-
-function matches($regex, $uri) {
-  return preg_match($regex, $uri) === 1;
-}
+connectToBooksDB($serverName, $username, $password, $dbName);
 
 // Route: /books
 if (matches('/^\/books$/', $uri)) {
@@ -48,8 +24,6 @@ if (matches('/^\/books$/', $uri)) {
     if (is_method('POST')) {
       $params = $_POST;
 
-
-
       $book = [
         'name'   => $params['name'],
         'author' => $params['author']
@@ -61,6 +35,37 @@ if (matches('/^\/books$/', $uri)) {
       // Return book in JSON form
       echo json_encode($book);
     }
+}
+
+function is_method($method)
+{
+  return $_SERVER['REQUEST_METHOD'] === $method;
+}
+
+function matches($regex, $uri)
+{
+  return preg_match($regex, $uri) === 1;
+}
+
+function connectToBooksDB($sn, $un, $pw, $db)
+{
+  // Start DB connection
+  $dbCon = mysqli_connect($sn, $un, $pw);
+
+  // Create Database
+  $dbQuery = "CREATE DATABASE IF NOT EXISTS " . $db;
+  mysqli_query($dbCon, $dbQuery);
+
+  // Select Database
+  mysqli_select_db($dbCon, $db);
+
+  // Create Table
+  $tableQuery = "CREATE TABLE IF NOT EXISTS books (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    author VARCHAR(50) NOT NULL
+  )";
+  mysqli_query($dbCon, $tableQuery);
 }
 
 ?>
