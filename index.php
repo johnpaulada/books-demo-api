@@ -30,6 +30,7 @@ if (matches('/^\/books$/', $uri)) {
 
         // Return error
         echo json_encode(['error' => "Book must have a name and an author."]);
+        exit;
       }
 
       $book = [
@@ -52,7 +53,7 @@ if (matches('/^\/books$/', $uri)) {
         http_response_code(500);
 
         // Return error
-        echo json_encode(['error' => "Failed to add book."]);
+        echo json_encode(['error' => "The book probably exists already."]);
       }
     }
 }
@@ -82,7 +83,7 @@ function connectToBooksDB($sn, $un, $pw, $db)
   // Create Table
   $tableQuery = "CREATE TABLE IF NOT EXISTS books (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE,
     author VARCHAR(50) NOT NULL
   )";
   mysqli_query($dbCon, $tableQuery);
