@@ -25,6 +25,7 @@ if (matches('/^\/books$/', $uri)) {
       // Set response code to 200 OK
       http_response_code(200);
 
+      // Check if there are books
       if (mysqli_num_rows($results) > 0) {
         while($row = mysqli_fetch_assoc($results)) {
           array_push($books, $row);
@@ -73,6 +74,26 @@ if (matches('/^\/books$/', $uri)) {
         echo json_encode(['error' => "The book probably exists already."]);
       }
     }
+}
+else if (matches('/^\/books\/\w+$/', $uri)) {
+  // Get book ID
+  $bookId = intval(str_replace('/books/', '', $uri));
+
+  $booksQuery = "SELECT * FROM books WHERE id=" . $bookId;
+  $results = mysqli_query($dbCon, $booksQuery);
+  $book = [];
+
+  // Set response code to 200 OK
+  http_response_code(200);
+
+  // Check if a book was found
+  if (mysqli_num_rows($results) > 0) {
+    $book = mysqli_fetch_assoc($results);
+    echo json_encode($book);
+  }
+  else {
+    echo json_encode(['msg' => "No such book."]);
+  }
 }
 
 function is_method($method)
