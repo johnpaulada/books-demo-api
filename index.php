@@ -24,6 +24,14 @@ if (matches('/^\/books$/', $uri)) {
     if (is_method('POST')) {
       $params = $_POST;
 
+      if (!isset($params['name']) || !isset($params['author'])) {
+        // Set response code to 400 BAD REQUEST
+        http_response_code(400);
+
+        // Return error
+        echo json_encode(['error' => "Book must have a name and an author."]);
+      }
+
       $book = [
         'name'   => $params['name'],
         'author' => $params['author']
