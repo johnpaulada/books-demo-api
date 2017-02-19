@@ -1,10 +1,21 @@
 <?php
 
 // Get uri
-$uri    = $_SERVER['REQUEST_URI'];
+$uri = $_SERVER['REQUEST_URI'];
 
-// Connect to db
-$dbCon = mysqli_connect("localhost","root","","books");
+// DB connection arguments
+$servername = "localhost";
+$username   = "root";
+$password   = "";
+$dbname     = "books";
+
+// Start DB connection
+$dbCon = mysqli_connect($servername, $username, $password);
+
+// Create Database
+$dbQuery = "CREATE DATABASE IF NOT EXISTS books";
+
+mysqli_query($dbCon, $dbQuery);
 
 function is_method($method) {
   return $_SERVER['REQUEST_METHOD'] === $method;
@@ -27,9 +38,8 @@ if (matches('/^\/books$/', $uri)) {
     if (is_method('POST')) {
       $params = $_POST;
 
-      // TODO: ... add a book
 
-      // Create temporary book
+
       $book = [
         'name'   => $params['name'],
         'author' => $params['author']
