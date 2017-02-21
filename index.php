@@ -12,7 +12,7 @@ error_reporting(E_ERROR | E_PARSE);
 // DB connection arguments
 $serverName = "localhost";
 $username   = "root";
-$password   = "";
+$password   = "root";
 $dbName     = "books";
 
 $dbCon = connectToBooksDB($serverName, $username, $password, $dbName);
@@ -40,7 +40,7 @@ if (matches('/^\/books$/', $uri)) {
         echo json_encode($books);
       }
       else {
-        echo json_decode(['msg' => "No results."]);
+        echo json_encode(['msg' => "No results."]);
       }
     }
 
