@@ -3,6 +3,9 @@
 // Get uri
 $uri = $_SERVER['REQUEST_URI'];
 
+// Add CORS
+header("Access-Control-Allow-Origin: *");
+
 // DB connection arguments
 $serverName = "localhost";
 $username   = "root";
