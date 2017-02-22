@@ -37,7 +37,7 @@ if (matches('/^\/books$/', $uri)) {
           array_push($books, $row);
         }
 
-        echo json_encode($books);
+        echo json_encode(['books' => $books]);
       }
       else {
         echo json_encode(['msg' => "No results."]);
