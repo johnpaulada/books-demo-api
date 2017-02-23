@@ -1,0 +1,63 @@
+{
+  "$jason": {
+    "head": {
+      "title": "Books",
+      "description": "A demo book collection app.",
+      "actions": {
+        "$load": {
+          "trigger": "load_books"
+        },
+        "load_books": {
+          "type": "$network.request",
+          "options": {
+            "url": "http://192.168.0.111:8002/books"
+          },
+          "success": {
+            "type": "$render"
+          }
+        }
+      },
+      "templates": {
+        "body": {
+          "header": {
+            "title": "Books App",
+            "style": {
+              "color": "#BBDEFB",
+              "background": "#2196F3"
+            },
+            "menu": {
+              "text": "Refresh",
+              "action": {
+                "trigger": "load_books"
+              },
+              "style": {
+                "color": "#BBDEFB"
+              }
+            }
+          },
+          "sections": [{
+            "items": {
+              "{{#each $jason.books}}": {
+                "type": "vertical",
+                "menu": {
+                  "items": [{
+                    "text": "Delete",
+                    "background": "#f44336"
+                  }]
+                },
+                "style": {
+                  "background": "#EEEEEE",
+                  "padding": "10"
+                },
+                "components": [
+                  {"type": "label", "text": "{{name}}", "style": {"size": "18", "color": "#424242"}},
+                  {"type": "label", "text": "{{author}}", "style": {"color": "#757575"}}
+                ]
+              }
+            }
+          }]
+        }
+      }
+    }
+  }
+}
